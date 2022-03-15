@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "de.unisaarland"
-version = "1.0-SNAPSHOT"
+version = "1.0.0"
 
 repositories {
     maven { url = uri("https://jitpack.io") }
@@ -34,4 +34,17 @@ tasks.withType<KotlinCompile>() {
 
 application {
     mainClassName = "MainKt"
+}
+
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = "MainKt"
+    }
+    from(sourceSets.main.get().output)
+
+    dependsOn(configurations.runtimeClasspath)
+    from({
+        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
+    })
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }

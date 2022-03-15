@@ -28,6 +28,8 @@ fun main(args: Array<String>) {
     val inputFile = File(inputPath)
     val outputFile = File(outputPath)
 
+    if (outputFile.exists()) outputFile.delete()
+
     when (conversion) {
         Conversion.P2I -> {
             PCDFConverter.pToIFile(inputFile, outputFile)
