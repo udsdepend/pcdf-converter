@@ -6,7 +6,7 @@ import java.io.File
 
 fun main(args: Array<String>) {
     val parser = ArgParser("PCDF File Converter")
-    print("Hello World")
+ 
     // Parse CLI arguments
     val inputPath by parser.option(
         ArgType.String,
