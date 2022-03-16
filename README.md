@@ -4,9 +4,9 @@ Small tool for converting persistent to intermediate PCDF files.
 ## Getting started
 
 You can either download the compiled Jar file from the [Releases page](https://github.com/udsdepend/pcdf-converter/releases) or
-clone the tool to compile it yourself. 
+clone the repository to compile the tool yourself. 
 
-### Gradle 
+### Building with Gradle 
 
 With *Gradle*, the tool can be used by running the following command in the main directory:
 
