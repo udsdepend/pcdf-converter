@@ -3,9 +3,10 @@ Small tool for converting persistent to intermediate PCDF files.
 
 ## Getting started
 
-Once cloned, the tool can be run in several ways. 
+You can either download the compiled Jar file from the [Releases page](https://github.com/udsdepend/pcdf-converter/releases) or
+clone the repository to compile the tool yourself. 
 
-### Gradle 
+### Building with Gradle 
 
 With *Gradle*, the tool can be used by running the following command in the main directory:
 
@@ -13,13 +14,13 @@ With *Gradle*, the tool can be used by running the following command in the main
 ./gradlew run --args="<args>"
 ```
 
-### Java
+
 We included a JVM compile script, hence after running:
 ```
 ./gradlew jar 
 ```
 
-the directory **build/libs** contains a file named **PCDFFileConverter-version.jar**. This can then be used with:
+the directory **build/libs** contains a file named **PCDFFileConverter-&lt;VERSION&gt;.jar**. This can then be used with:
 
 ```
 java -jar PCDFFileConverter-version.jar <args>
@@ -33,6 +34,11 @@ The tool supports persistent to intermediate conversion, more functionality can 
 - **-c, --conversion (optional)**: specifies conversion (currently only persistent to intermediate supported and set as default)
 
 ## Example
+*Jar*
+```
+java -jar PCDFFileConverter-<VERSION>.jar -i ./input.ppcdf -o ./output.ipcdf
+```
+
 *Gradle*
 ```
 ./gradlew run --args="-i input.ppcdf -o output.ipcdf"
@@ -40,10 +46,5 @@ The tool supports persistent to intermediate conversion, more functionality can 
 with optional conversion-paramter:
 ```
 ./gradlew run --args="-i ./input.ppcdf -o ./output.ipcdf -c p2i"
-```
-
-*Jar*
-```
-java -jar PCDFFileConverter-version.jar -i ./input.ppcdf -o ./output.ipcdf
 ```
 

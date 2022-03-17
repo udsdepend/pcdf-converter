@@ -6,7 +6,7 @@ import java.io.File
 
 fun main(args: Array<String>) {
     val parser = ArgParser("PCDF File Converter")
- 
+    println("Hi, I'm the PCDF File Converter!")
     // Parse CLI arguments
     val inputPath by parser.option(
         ArgType.String,
@@ -36,8 +36,15 @@ fun main(args: Array<String>) {
     if (outputFile.exists()) outputFile.delete()
 
     when (conversion) {
+
         Conversion.P2I -> {
-            PCDFConverter.pToIFile(inputFile, outputFile)
+            try {
+                PCDFConverter.pToIFile(inputFile, outputFile)
+            } catch (e: Exception) {
+                println("Something went wrong: ")
+                println(e)
+                println("\nMake sure that the input file exists, is readable and that the output location is writable. Also make sure that the paths are *relative* to the location of the working directory of your console.")
+            }
         }
     }
 }
