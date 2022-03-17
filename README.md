@@ -32,6 +32,9 @@ The tool supports persistent to intermediate conversion, more functionality can 
 - **-i, --inputPath**:  *relative* path to input file to be converted
 - **-o, --outputPath**: *relative* path to output file to be written to (does not have to exist, existing files will be overwritten)
 - **-c, --conversion (optional)**: specifies conversion (currently only persistent to intermediate supported and set as default)
+- **-p, --print**: the resulting intermediate events will get printed to the command line. 
+
+One of **-o** or **-p** has to be given (both is also possible).
 
 ## Example
 *Jar*
