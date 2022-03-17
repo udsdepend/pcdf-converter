@@ -30,16 +30,20 @@ fun main(args: Array<String>) {
     ).default(false)
     parser.parse(args)
 
+    if (outputPath == null && !print){
+        println("Print option must be set or output file given.")
+        return
+    }
     val inputFile = File(inputPath)
-    val outputFile = File(outputPath)
+    val outputFile = if (outputPath != null) File(outputPath!!)  else null
 
-    if (outputFile.exists()) outputFile.delete()
+    if (outputFile?.exists() == true) outputFile.delete()
 
     when (conversion) {
 
         Conversion.P2I -> {
             try {
-                PCDFConverter.pToIFile(inputFile, outputFile)
+                PCDFConverter.pToIFile(inputFile, outputFile, print)
             } catch (e: Exception) {
                 println("Something went wrong: ")
                 println(e)
