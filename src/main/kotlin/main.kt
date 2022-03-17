@@ -17,12 +17,17 @@ fun main(args: Array<String>) {
         ArgType.String,
         shortName = "o",
         description = "Relative path to output file"
-    ).required()
+    )
     val conversion by parser.option(
         ArgType.Choice<Conversion>(),
         shortName = "c",
         description = "Type of conversion, at the moment only persistent to intermediate available"
     ).default(Conversion.P2I)
+    val print by parser.option(
+        ArgType.Boolean,
+        shortName = "p",
+        description = "Print resulting events to the command line."
+    ).default(false)
     parser.parse(args)
 
     val inputFile = File(inputPath)
