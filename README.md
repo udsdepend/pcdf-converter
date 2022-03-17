@@ -30,9 +30,9 @@ java -jar PCDFFileConverter-version.jar <args>
 The tool supports persistent to intermediate conversion, more functionality can be added. There are two required arguments:
 
 - **-i, --inputPath**:  *relative* path to input file to be converted
-- **-o, --outputPath**: *relative* path to output file to be written to (does not have to exist, existing files will be overwritten)
+- **-o, --outputPath (optional)**: *relative* path to output file to be written to (does not have to exist, existing files will be overwritten)
 - **-c, --conversion (optional)**: specifies conversion (currently only persistent to intermediate supported and set as default)
-- **-p, --print**: the resulting intermediate events will get printed to the command line. 
+- **-p, --print (optional)**: the resulting intermediate events will get printed to the command line. 
 
 One of **-o** or **-p** has to be given (both is also possible).
 
