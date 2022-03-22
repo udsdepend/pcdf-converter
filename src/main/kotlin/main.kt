@@ -43,6 +43,7 @@ fun main(args: Array<String>) {
 
         Conversion.P2I -> {
             try {
+                println("Given file was generated with: " + SimAnalyser.isSimulator(inputFile))
                 PCDFConverter.pToIFile(inputFile, outputFile, print)
             } catch (e: Exception) {
                 println("Something went wrong: ")

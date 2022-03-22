@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "de.unisaarland"
-version = "1.0.1"
+version = "1.0.2"
 
 repositories {
     maven { url = uri("https://jitpack.io") }
