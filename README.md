@@ -33,6 +33,7 @@ The tool supports persistent to intermediate conversion, more functionality can 
 - **-o, --outputPath (optional)**: *relative* path to output file to be written to (does not have to exist, existing files will be overwritten)
 - **-c, --conversion (optional)**: specifies conversion (currently only persistent to intermediate supported and set as default)
 - **-p, --print (optional)**: the resulting intermediate events will get printed to the command line. 
+- **-m, --machineReadable (optional)**: use this option to suppress human friendly console outputs (e.g., when stdout is processed by another program)
 
 One of **-o** or **-p** has to be given (both is also possible).
 

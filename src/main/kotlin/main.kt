@@ -27,12 +27,14 @@ fun main(args: Array<String>) {
     val printConversionResult by parser.option(
         ArgType.Boolean,
         shortName = "p",
-        description = "Print resulting events to the command line/stdout."
+        description = "Print resulting events to the command line/stdout.",
+        fullName = "print"
     ).default(false)
     val onlyMachineReadableConsoleOutput by parser.option(
         ArgType.Boolean,
         shortName = "m",
-        description = "Suppress console outputs that are not machine readable."
+        description = "Suppress console outputs that are not machine readable.",
+        fullName = "machineReadable"
     ).default(false)
     parser.parse(args)
 
