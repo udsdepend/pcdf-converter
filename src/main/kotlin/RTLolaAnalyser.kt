@@ -1,4 +1,6 @@
 package de.unisaarland.pcdfconverter
+import de.unisaarland.pcdfanalyser.eventStream.EventStream
+import de.unisaarland.pcdfanalyser.eventStream.FileEventStream
 import de.unisaarland.pcdfconverter.RTLolaAnalyser.RDE_RTLOLA_INPUT_QUANTITIES.*
 import pcdfEvent.EventType.*
 import pcdfEvent.PCDFEvent
@@ -141,10 +143,15 @@ class RTLolaAnalyser {
     private external fun sendevent(inputs: DoubleArray): DoubleArray
 
     fun monitorFile(file: File, relevant_outputs: String, outputFile: File) {
-        val iter = file.bufferedReader().lineSequence().map {
-            PCDFEvent.fromString(it).toIntermediate()
-        }.iterator()
-        monitorOffline(iter, relevant_outputs, outputFile)
+//        val iter = file.bufferedReader().lineSequence().map {
+//            PCDFEvent.fromString(it).toIntermediate()
+//        }.iterator()
+        val eventStream = FileEventStream(file)
+        monitorOffline(eventStream.iterator(), relevant_outputs, outputFile)
+    }
+
+    fun monitorEventStream(stream: EventStream, relevant_outputs: String, outputFile: File) {
+        monitorOffline(stream.iterator(), relevant_outputs, outputFile)
     }
 
     private fun monitorOffline(dataIterator: Iterator<PCDFEvent>, relevant_outputs: String, outputFile: File) {

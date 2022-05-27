@@ -227,3 +227,9 @@ output not_rde_test: Bool := (
 // numerical helper streams for RDE-UI
 output is_valid_test_num: Float64 := if is_valid_test then 1.0 else 0.0
 output not_rde_test_num: Float64 := if not_rde_test then 1.0 else 0.0
+
+
+output vis_environment: Float64 := if is_urban then 50.0 else if is_rural then 100.0 else if is_motorway then 150.0 else 0.0
+output vis_is_valid_test: Float64 := if is_valid_test then 200.0 else 0.0
+output vis_emission_limits_exceeded: Float64 := if emission_limits_exceeded then 100.0 else 0.0
+output vis_test_verdict: Float64 := vis_is_valid_test + vis_emission_limits_exceeded

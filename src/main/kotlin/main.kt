@@ -1,9 +1,16 @@
+import de.unisaarland.pcdfanalyser.eventStream.FileEventStream
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
 import kotlinx.cli.default
 import kotlinx.cli.required
 import java.io.File
 import de.unisaarland.pcdfconverter.RTLolaAnalyser
+import pcdfEvent.events.obdEvents.obdIntermediateEvents.OBDIntermediateEvent
+import pcdfEvent.events.obdEvents.obdIntermediateEvents.multiComponentEvents.NOXSensorAlternativeEvent
+import pcdfEvent.events.obdEvents.obdIntermediateEvents.multiComponentEvents.NOXSensorCorrectedAlternativeEvent
+import pcdfEvent.events.obdEvents.obdIntermediateEvents.multiComponentEvents.NOXSensorCorrectedEvent
+import pcdfEvent.events.obdEvents.obdIntermediateEvents.multiComponentEvents.NOXSensorEvent
+import pcdfUtilities.StreamFilter
 
 fun main(args: Array<String>) {
     val p = PCDFConverter()
@@ -67,7 +74,16 @@ fun main(args: Array<String>) {
     if (rdeanalysis != null) {
         if (outputFile != null) {
             val analyser = RTLolaAnalyser()
-            analyser.monitorFile(inputFile, rdeanalysis!!, outputFile)
+            val eventStream = FileEventStream(inputFile)
+            val invalidNOxValue = 65535
+            val filteredStream = StreamFilter(eventStream) {
+                !(it is NOXSensorEvent && (it.sensor1_1 == invalidNOxValue || it.sensor1_2 == invalidNOxValue || it.sensor2_1 == invalidNOxValue || it.sensor2_2 == invalidNOxValue) ||
+                it is NOXSensorAlternativeEvent && (it.sensor1_1 == invalidNOxValue || it.sensor1_2 == invalidNOxValue || it.sensor2_1 == invalidNOxValue || it.sensor2_2 == invalidNOxValue) ||
+                it is NOXSensorCorrectedEvent  && (it.sensor1_1 == invalidNOxValue || it.sensor1_2 == invalidNOxValue || it.sensor2_1 == invalidNOxValue || it.sensor2_2 == invalidNOxValue) ||
+                it is NOXSensorCorrectedAlternativeEvent && (it.sensor1_1 == invalidNOxValue || it.sensor1_2 == invalidNOxValue || it.sensor2_1 == invalidNOxValue || it.sensor2_2 == invalidNOxValue))
+            }
+            analyser.monitorEventStream(filteredStream, rdeanalysis!!, outputFile)
+            //analyser.monitorFile(inputFile, rdeanalysis!!, outputFile)
         } else {
             println("No Output-File given")
         }
