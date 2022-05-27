@@ -201,6 +201,7 @@ class RTLolaAnalyser {
         // Collect events, similar to online monitoring.
         while (dataIterator.hasNext()) {
             val event = dataIterator.next()
+            outputFile.appendText(event.toIntermediate().serialize() + "\n")
             val lolaResult = collectData(event)
             if (lolaResult.isNotEmpty()) {
                 generateLolaEvents(lolaResult, relevant_outputs, outputFile)
