@@ -163,6 +163,8 @@ class RTLolaAnalyser {
         // Get initial events
         while (dataIterator.hasNext()) {
             val event = dataIterator.next()
+            // append original initial events
+            outputFile.appendText(event.toIntermediate().serialize() + "\n")
             if (event.toIntermediate().type == OBD_RESPONSE) {
                 val ievent = event.toIntermediate() as OBDIntermediateEvent
                 val command = OBDCommand.getCommand(ievent.mode, ievent.pid)
@@ -203,12 +205,11 @@ class RTLolaAnalyser {
 
         // Setup RTLola Monitor
         initmonitor(buildSpec(), relevant_outputs)
-        var result = doubleArrayOf()
 
         // Collect events, similar to online monitoring.
         while (dataIterator.hasNext()) {
             val event = dataIterator.next()
-            outputFile.appendText(event.toIntermediate().serialize() + "\n")
+            outputFile.appendText(event.toIntermediate().serialize() + "\n") // Append original event
             val lolaResult = collectData(event)
             if (lolaResult.isNotEmpty()) {
                 generateLolaEvents(lolaResult, relevant_outputs, outputFile)
