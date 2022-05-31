@@ -20,7 +20,7 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    implementation("com.github.udsdepend:pcdf-core-jvm:1.0.9")
+    implementation("com.github.udsdepend:pcdf-core-jvm:1.0.10")
     implementation("org.jetbrains.kotlinx:kotlinx-cli:0.3.4")
 }
 

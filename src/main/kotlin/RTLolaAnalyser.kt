@@ -212,18 +212,18 @@ class RTLolaAnalyser {
             outputFile.appendText(event.toIntermediate().serialize() + "\n") // Append original event
             val lolaResult = collectData(event)
             if (lolaResult.isNotEmpty()) {
-                generateLolaEvents(lolaResult, relevant_outputs, outputFile)
+                generateLolaEvents(lolaResult, relevant_outputs, outputFile, event.timestamp)
             }
         }
     }
 
     private fun generateLolaEvents(lola_result : DoubleArray, relevant_outputs: String, outputFile:
-    File) {
+    File, timestamp: Long) {
         val rel_out_list = relevant_outputs.split(",")
         for (i in rel_out_list.indices) {
             val lolaEvent = LolaEventDouble(
                 "PCDFConverter",
-                System.nanoTime(),
+                timestamp,
                 rel_out_list[i],
                 lola_result[i]
             )
