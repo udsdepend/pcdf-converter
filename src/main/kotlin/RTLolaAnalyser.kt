@@ -98,7 +98,7 @@ class RTLolaAnalyser {
             println("RTLola could not be loaded from ${lolaLocation}!")
             false
         }
-        specBody = javaClass.classLoader.getResource("lola-spec/spec_body.lola")?.readText()!!
+        specBody = javaClass.classLoader.getResource("lola-spec/spec_body_nox.lola")?.readText()!!
 
         specHeader = javaClass.classLoader.getResource("lola-spec/spec_header.lola")?.readText()!!
 
