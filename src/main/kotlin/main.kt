@@ -82,6 +82,7 @@ fun main(args: Array<String>) {
                 it is NOXSensorCorrectedEvent  && (it.sensor1_1 == invalidNOxValue || it.sensor1_2 == invalidNOxValue || it.sensor2_1 == invalidNOxValue || it.sensor2_2 == invalidNOxValue) ||
                 it is NOXSensorCorrectedAlternativeEvent && (it.sensor1_1 == invalidNOxValue || it.sensor1_2 == invalidNOxValue || it.sensor2_1 == invalidNOxValue || it.sensor2_2 == invalidNOxValue))
             }
+//            analyser.debugRTLola()
             analyser.monitorEventStream(filteredStream, rdeanalysis!!, outputFile)
             //analyser.monitorFile(inputFile, rdeanalysis!!, outputFile)
         } else {

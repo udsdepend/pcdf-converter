@@ -142,6 +142,24 @@ class RTLolaAnalyser {
      */
     private external fun sendevent(inputs: DoubleArray): DoubleArray
 
+
+//    fun debugRTLola() {
+//        val spec = javaClass.classLoader.getResource("pctl_debug.lola")?.readText()!!
+//        initmonitor(spec,"good_vals,perci")
+//        for (i in 0..1000) {
+//            val cat = if (i % 200 == 0) 1.0 else 0.0
+//            val inputs = doubleArrayOf(42.0 - (i.toDouble()/1000), cat, i.toDouble())
+//            val outputs = sendevent(inputs)
+//            //println("RTLola in: ${inputs.joinToString(", ")}")
+//            if (outputs.size > 0) {
+//                println("RTLola out: ${outputs.joinToString(", ")}")
+//            } else {
+//                println("RTLola out: n/a")
+//            }
+//        }
+//    }
+
+
     fun monitorFile(file: File, relevant_outputs: String, outputFile: File) {
 //        val iter = file.bufferedReader().lineSequence().map {
 //            PCDFEvent.fromString(it).toIntermediate()

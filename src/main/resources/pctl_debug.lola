@@ -1,0 +1,15 @@
+input val: Float64
+input category: Float64
+
+output valp: Float64 @1Hz := val.hold().defaults(to: 0.0)
+output categoryp: Float64 @1Hz := category.hold().defaults(to: 0.0)
+
+//output counter: Int64 @1Hz := counter.offset(by: -1).defaults(to: 0) + 1
+
+output is_good: Bool := categoryp == 1.0
+
+output good_vals: Float64 @1Hz filter is_good := valp
+output perci: Float64 @1Hz := good_vals.aggregate(over_discrete: 1000, using: pctl95).defaults(to: -1.0)
+
+trigger perci < 40.0
+	"Trigger"

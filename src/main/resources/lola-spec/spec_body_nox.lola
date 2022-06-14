@@ -195,10 +195,37 @@ output invalid_trip_dynamics: Bool @1Hz := (
 // we use diesel specific values here
 output nox_mass_flow: Float64 @1Hz // in [g/s] for diesel
   := exhaust_mass_flowp * 0.001586 * nox_ppmp
+
 output co2_mass_flow: Float64 @1Hz // in [g/s] for diesel
   := exhaust_mass_flowp * 0.001517 * co2_ppmp
+output co2_mass_flow_urban: Float64 @1Hz := if is_urban then co2_mass_flow else 0.0
+output co2_mass_flow_rural: Float64 @1Hz := if is_rural then co2_mass_flow else 0.0
+output co2_mass_flow_motorway: Float64 @1Hz := if is_motorway then co2_mass_flow else 0.0
+//output co2_mass_flow_urban: Float64 @1Hz filter is_urban // in [g/s] for diesel
+//  := exhaust_mass_flowp * 0.001517 * co2_ppmp
+//output co2_mass_flow_rural: Float64 @1Hz filter is_rural // in [g/s] for diesel
+//  := exhaust_mass_flowp * 0.001517 * co2_ppmp
+//output co2_mass_flow_motorway: Float64 @1Hz filter is_motorway // in [g/s] for diesel
+//  := exhaust_mass_flowp * 0.001517 * co2_ppmp
+
 output total_co2_mass: Float64  // in [g]
 := total_co2_mass.offset(by: -1).defaults(to: 0.0) + co2_mass_flow * 1.0 //Dt
+output total_co2_mass_urban: Float64  @1Hz // in [g]
+:= co2_mass_flow_urban.aggregate(over: 2h, using: sum)
+output total_co2_mass_rural: Float64  @1Hz // in [g]
+:= co2_mass_flow_rural.aggregate(over: 2h, using: sum)
+output total_co2_mass_motorway: Float64  @1Hz // in [g]
+:= co2_mass_flow_motorway.aggregate(over: 2h, using: sum)
+
+
+output co2_per_kilometer: Float64 := (if d > 0.0 then total_co2_mass / (d / 1000.0) else  0.0)
+output co2_per_kilometer_urban: Float64 := (if d_u > 0.0 then total_co2_mass_urban / (d_u / 1000.0) else  0.0)
+output co2_per_kilometer_rural: Float64 := (if d_r > 0.0 then total_co2_mass_rural / (d_r / 1000.0) else  0.0)
+output co2_per_kilometer_motorway: Float64 := (if d_m > 0.0 then total_co2_mass_motorway / (d_m / 1000.0) else  0.0)
+
+
+
+
 //////////////////////////////////////////////////////////
 // Determine trip validity and check emissions.         //
 //////////////////////////////////////////////////////////
@@ -208,9 +235,9 @@ output is_valid_test: Bool := (
   !invalid_trip_dynamics
 )
 output D_nox_mass: Float64 @1Hz := nox_mass_flow * 1.0 //Dt
-output nox_mass_urban: Float64 @1Hz filter is_urban := nox_mass_flow * 1.0
-output nox_mass_rural: Float64 @1Hz filter is_rural := nox_mass_flow * 1.0
-output nox_mass_motorway: Float64 @1Hz filter is_motorway := nox_mass_flow * 1.0
+output nox_mass_urban: Float64 @1Hz := if is_urban then D_nox_mass else 0.0 // @1Hz filter is_urban := nox_mass_flow * 1.0
+output nox_mass_rural: Float64 @1Hz  := if is_rural then D_nox_mass else 0.0  // @1Hz filter is_rural := nox_mass_flow * 1.0
+output nox_mass_motorway: Float64 @1Hz := if is_motorway then D_nox_mass else 0.0  // @1Hz filter is_motorway := nox_mass_flow * 1.0
 
 output nox_mass_aggregated: Float64 @1Hz := D_nox_mass.aggregate(over: 2h, using: sum)
 output nox_mass_aggregated_urban: Float64 @1Hz := nox_mass_urban.aggregate(over: 2h, using: sum)
